@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+<head th:replace="~{layout/layout}" id="head">
+    <meta charset="UTF-8">
+</head>
+<body>
+<header th:repleace="~{layout/layout}" id="header"></header>
+
+<div class="py-4 ml-5 mr-5">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+            <h4 class="card-title">
+                <a th:href="@{/formEmpleado}" class="btn btn-primary">Agregar empleado</a>
+                <a th:href="@{/exportarPDF}" class="btn btn-secondary">Exportar a PDF</a>
+                <a th:href="@{/exportarExcel}" class="btn btn-success">Exportar a Excel</a>
+            </h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Rfc</th>
+                        <th>Telefono</th>
+                        <th>Detalles</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empleado : ${empleados}">
+                        <td th:text="${empleado.id}"></td>
+                        <td th:text="${empleado.nombre}"></td>
+                        <td th:text="${empleado.correo}"></td>
+                        <td th:text="${empleado.rfc}"></td>
+                        <td th:text="${empleado.telefono}"></td>
+                        <td> <a class="btn btn-info btn-sm" th:href="@{/verDetalles/} + ${empleado.id}">Detalles</a></td>
+                        <td> <a class="btn btn-warning btn-sm" th:href="@{/formEmpleado/} + ${empleado.id}">Editar</a></td>
+                        <td> <a class="btn btn-danger btn-sm" th:href="@{/eliminar/} + ${empleado.id}" onclick="return confirm('Estas seguro de eliminar al empleado?');">Eliminar</a></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:replace="~{paginator-nav}" id="paginator"></nav>
+         </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout}" id="footer"></footer>
+</body>
+</html>
