@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout/layout}" id="head">
+    <meta charset="UTF-8">
+</head>
+<body>
+<header th:repleace="~{layout/layout}" id="header"></header>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center" th:text="${titulo}"></h1>
+            <div class="card-body">
+                <form th:action="@{/formEmpleado}" th:object="${empleado}" method="post">
+                    <input type="hidden" th:field="*{id}" th:value="${empleado.id}"/>
+                    <div class="form-group">
+                        <label>Nombre: </label>
+                        <input type="text" th:field="*{nombre}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:error="*{nombre}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo: </label>
+                        <input type="text" th:field="*{correo}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('correo')}" th:error="*{correo}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>RFC: </label>
+                        <input type="text" th:field="*{rfc}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('rfc')}" th:error="*{rfc}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono: </label>
+                        <input type="text" th:field="*{telefono}" class="form-control" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:error="*{telefono}"></small>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Guardar" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/layout}" id="footer"></footer>
+</body>
+</html>

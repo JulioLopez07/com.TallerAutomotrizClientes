@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout/layout}" id="head">
+  <meta charset="UTF-8">
+</head>
+<body>
+  <header th:repleace="~{layout/layout}" id="header"></header>
+
+  <div class="container py-4">
+    <div class="card bg-light">
+      <div class="card-header" th:text="${titulo}"></div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item active" th:text="${empleado.nombre}"></li>
+          <li class="list-group-item" th:text="${empleado.correo}"></li>
+          <li class="list-group-item" th:text="${empleado.telefono}"></li>
+          <li class="list-group-item" th:text="${empleado.rfc}"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="~{layout/layout}" id="footer"></footer>
+</body>
+</html>
