@@ -7,53 +7,60 @@
     <title>Gestion Taller Automotriz</title>
 </head>
 <body>
-    <div class="container text-center">
+    <div class="py-4 ml-5 mr-5">
         <div class="mr-5">
-            <h2>Lista de Talleres Automotices</h2>
+            <h2>Lista de Talleres Automotrices</h2>
+        </div>
+        <br>
+        <div class="card bg-light">
+            <div class="card-header" th:text="${titulo}"></div>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a th:href="@{/talleres/registro}" class="btn btn-primary">+ Agregar</a>
+                    <a th:href="@{/talleres/exportarPDF}" class="btn btn-secondary">Exportar a PDF</a>
+                    <a th:href="@{/talleres/exportarExcel}" class="btn btn-success">Exportar a Excel</a>
+                </h4>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Encargado</th>
+                            <th>Dirección</th>
+                            <th>C.p.</th>
+                            <th>Ciudad</th>
+                            <th>Estado</th>
+                            <th>Telefono</th>
+                            <th>Correo</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="tallerAutomotriz : ${listaTalleres}">
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.id}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.nombre}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.empleados.nombre}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.direccion}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.cp}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.ciudad}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.estado}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.telefono}"></td>
+                            <td style="font-size: 14px;" th:text="${tallerAutomotriz.correo_electronico}"></td>
+
+                            <td>
+                                <a class="btn btn-info btn-sm" th:href="@{'/talleres/editar'} + '/' + ${tallerAutomotriz.id}">Editar</a>
+                                &nbsp;&nbsp;
+                                <a class="btn btn-danger btn-sm" th:href="@{'/talleres/eliminar'} + '/' + ${tallerAutomotriz.id}" onclick="return confirm('Estas seguro de eliminar al empleados?');">Eliminar</a>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card bg-light">
-        <div class="card-header" th:text="${titulo}"></div>
-        <div class="card-body">
-            <div>
-        <a th:href="@{/taller/agregar}" class="btn btn-primary">Agregar Taller</a>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Dirección</th>
-                <th>C.p.</th>
-                <th>Ciudad</th>
-                <th>Estado</th>
-                <th>Telefono</th>
-                <th>Correo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="tallerAutomotriz : ${listaTalleres}">
-                <td th:text="${tallerAutomotriz.id}"></td>
-                <td th:text="${tallerAutomotriz.nombre}"></td>
-                <td th:text="${tallerAutomotriz.direccion}"></td>
-                <td th:text="${tallerAutomotriz.cp}"></td>
-                <td th:text="${tallerAutomotriz.ciudad}"></td>
-                <td th:text="${tallerAutomotriz.estado}"></td>
-                <td th:text="${tallerAutomotriz.telefono}"></td>
-                <td th:text="${tallerAutomotriz.correo}"></td>
 
-                <!--
-                <td th:text="${tallerAutomotriz.direccion + ${tallerAutomotriz.colonia} + ${tallerAutomotriz.cp}"></td>
-
-
-                <td> <a class="btn btn-info btn-sm" th:href="@{/verDetalles/} + ${empleado.id}">Detalles</a></td>
-                <td> <a class="btn btn-warning btn-sm" th:href="@{/formEmpleado/} + ${empleado.id}">Editar</a></td>
-                <td> <a class="btn btn-danger btn-sm" th:href="@{/eliminar/} + ${empleado.id}" onclick="return confirm('Estas seguro de eliminar al empleado?');">Eliminar</a></td>
-                -->
-            </tr>
-            </tbody>
-        </table>
-    </div>
-        </div>
-    </div>
 </body>
 </html>

@@ -11,7 +11,7 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-title">
-                <a th:href="@{/formEmpleado}" class="btn btn-primary">Agregar empleado</a>
+                <a th:href="@{/empleados/registro}" class="btn btn-primary">Agregar empleados</a>
                 <a th:href="@{/exportarPDF}" class="btn btn-secondary">Exportar a PDF</a>
                 <a th:href="@{/exportarExcel}" class="btn btn-success">Exportar a Excel</a>
             </h4>
@@ -20,24 +20,30 @@
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
+                        <th>Puesto</th>
                         <th>Correo</th>
                         <th>Rfc</th>
                         <th>Telefono</th>
-                        <th>Detalles</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th>Documentos</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="empleado : ${empleados}">
-                        <td th:text="${empleado.id}"></td>
-                        <td th:text="${empleado.nombre}"></td>
-                        <td th:text="${empleado.correo}"></td>
-                        <td th:text="${empleado.rfc}"></td>
-                        <td th:text="${empleado.telefono}"></td>
-                        <td> <a class="btn btn-info btn-sm" th:href="@{/verDetalles/} + ${empleado.id}">Detalles</a></td>
-                        <td> <a class="btn btn-warning btn-sm" th:href="@{/formEmpleado/} + ${empleado.id}">Editar</a></td>
-                        <td> <a class="btn btn-danger btn-sm" th:href="@{/eliminar/} + ${empleado.id}" onclick="return confirm('Estas seguro de eliminar al empleado?');">Eliminar</a></td>
+                    <tr th:each="empleados : ${empleados}">
+                        <td style="font-size: 14px;" th:text="${empleados.id}"></td>
+                        <td style="font-size: 14px;" th:text="${empleados.nombre}"></td>
+                        <td style="font-size: 14px;" th:text="${empleados.puestos.nombre}"></td>
+                        <td style="font-size: 14px;" th:text="${empleados.correo_electronico}"></td>
+                        <td style="font-size: 14px;" th:text="${empleados.rfc}"></td>
+                        <td style="font-size: 14px;" th:text="${empleados.telefono}"></td>
+                        <td>
+                            <a class="btn btn-info btn-sm" th:href="@{/empleados/servicios/} + ${empleados.id}">Servicios</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" th:href="@{/empleados/editar/} + ${empleados.id}">Editar</a>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-danger btn-sm" th:href="@{/empleados/eliminar/} + ${empleados.id}" onclick="return confirm('Estas seguro de eliminar al empleados?');">Eliminar</a>
+                        </td>
 
                     </tr>
                 </tbody>

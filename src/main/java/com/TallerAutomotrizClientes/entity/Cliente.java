@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-public class TallerAutomotriz {
+@Table(name = "clientes")
+public class Cliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -12,6 +14,12 @@ public class TallerAutomotriz {
     @NotEmpty
     @Column(nullable = false)
     private String nombre;
+    @NotEmpty
+    @Column(nullable = false)
+    private String telefono;
+    @NotEmpty
+    @Column(nullable = false)
+    private String correo_electronico;
     @NotEmpty
     @Column(nullable = false)
     private String direccion;
@@ -24,58 +32,29 @@ public class TallerAutomotriz {
     @NotEmpty
     @Column(nullable = false)
     private String estado;
-    @NotEmpty
-    @Column(nullable = false)
-    private String telefono;
-    @NotEmpty
-    @Column(nullable = false)
-    private String correo_electronico;
 
-    @ManyToOne
-    @JoinColumn(name = "encargado_id")
-    private Empleados empleados;
-
-    public TallerAutomotriz() {
-        super();
-    }
-
-    public TallerAutomotriz(Integer id, String nombre, String direccion, String cp, String ciudad, String estado, String telefono, String correo_electronico, Empleados empleados) {
+    public Cliente(Integer id, String nombre, String telefono, String correo_electronico, String direccion, String cp, String ciudad, String estado) {
         this.id = id;
         this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo_electronico = correo_electronico;
         this.direccion = direccion;
         this.cp = cp;
         this.ciudad = ciudad;
         this.estado = estado;
-        this.telefono = telefono;
-        this.correo_electronico = correo_electronico;
-        this.empleados = empleados;
     }
 
-    public TallerAutomotriz(String nombre, String direccion, String cp, String ciudad, String estado, String telefono, String correo_electronico, Empleados empleados) {
+    public Cliente(String nombre, String telefono, String correo_electronico, String direccion, String cp, String ciudad, String estado) {
         this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo_electronico = correo_electronico;
         this.direccion = direccion;
         this.cp = cp;
         this.ciudad = ciudad;
         this.estado = estado;
-        this.telefono = telefono;
-        this.correo_electronico = correo_electronico;
-        this.empleados = empleados;
     }
 
-    public Empleados getEmpleados() {
-        return empleados;
-    }
-
-    public void setEmpleados(Empleados empleados) {
-        this.empleados = empleados;
-    }
-
-    public TallerAutomotriz(Integer id) {
-        this.id = id;
-    }
-
-    public TallerAutomotriz(String nombre) {
-        this.nombre = nombre;
+    public Cliente() {
     }
 
     public Integer getId() {
@@ -92,6 +71,22 @@ public class TallerAutomotriz {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo_electronico() {
+        return correo_electronico;
+    }
+
+    public void setCorreo_electronico(String correo_electronico) {
+        this.correo_electronico = correo_electronico;
     }
 
     public String getDireccion() {
@@ -124,21 +119,5 @@ public class TallerAutomotriz {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getCorreo_electronico() {
-        return correo_electronico;
-    }
-
-    public void setCorreo_electronico(String correo_electronico) {
-        this.correo_electronico = correo_electronico;
     }
 }

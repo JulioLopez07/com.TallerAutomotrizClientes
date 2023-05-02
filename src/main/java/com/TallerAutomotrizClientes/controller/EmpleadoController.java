@@ -1,6 +1,10 @@
 package com.TallerAutomotrizClientes.controller;
 
-import com.TallerAutomotrizClientes.entity.Empleado;
+import com.TallerAutomotrizClientes.entity.Empleados;
+import com.TallerAutomotrizClientes.entity.Puestos;
+import com.TallerAutomotrizClientes.entity.TallerAutomotriz;
+import com.TallerAutomotrizClientes.repository.PuestosRepository;
+import com.TallerAutomotrizClientes.repository.TallerAutomotrizRepository;
 import com.TallerAutomotrizClientes.service.EmpleadoService;
 import com.TallerAutomotrizClientes.util.paginacion.PageRender;
 import jakarta.validation.Valid;
@@ -18,86 +22,92 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class EmpleadoController {
     @Autowired
     private EmpleadoService empleadoService;
+    @Autowired
+    private TallerAutomotrizRepository tallerAutomotrizRepository;
 
-    @GetMapping("/verDetalles/{id}")
-    public String verDetallesDelEmpleado(@PathVariable(value="id") Integer id, Map<String,Object> modelo, RedirectAttributes flash){
-        Empleado empleado = empleadoService.findOne(id);
-        if(empleado == null){
+    @Autowired
+    private PuestosRepository puestosRepository;
+
+    @GetMapping("/empleados/detalles/{id}")
+    public String verDetallesDelEmpleado(@PathVariable(value = "id") Integer id, Map<String, Object> modelo, RedirectAttributes flash) {
+        Empleados empleados = empleadoService.findOne(id);
+        if (empleados == null) {
             flash.addFlashAttribute("error", "El empleado no existe en la base de datos");
             return "redirect:/listar";
         }
-        modelo.put("empleado", empleado);
-        modelo.put("titulo", "Detalles del empleado " + empleado.getNombre());
+        modelo.put("empleado", empleados);
+        modelo.put("titulo", "Detalles del empleado " + empleados.getNombre());
         return "verDetalles";
     }
 
-    @GetMapping({"/listar"})
-    public String listarEmpleados(@RequestParam(name = "page",defaultValue = "0")int page, Model model){
+    @GetMapping({"/empleados"})
+    public String listarEmpleados(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
         Pageable pageRequest = PageRequest.of(page, 20);
-        Page<Empleado> empleados = empleadoService.findAll(pageRequest);
-        PageRender<Empleado> pageRender = new PageRender<>("/listar", empleados);
-        model.addAttribute("titulo","Listado de empleados");
-        model.addAttribute("empleados",empleados);
-        model.addAttribute("page",pageRender);
+        Page<Empleados> empleados = empleadoService.findAll(pageRequest);
+        PageRender<Empleados> pageRender = new PageRender<>("/listar", empleados);
+        model.addAttribute("titulo", "Listado de empleados");
+        model.addAttribute("empleados", empleados);
+        model.addAttribute("page", pageRender);
 
-        return  "listar";
+        return "listar";
     }
 
-    @GetMapping("/formEmpleado")
-    public String mostrarFormularioDeRegistroEmpleado(Map<String, Object> modelo){
-        Empleado empleado = new Empleado();
-        modelo.put("empleado", empleado);
-        modelo.put("titulo", "Registro de empleados");
+    @GetMapping("/empleados/registro")
+    public String mostrarFormularioDeRegistroEmpleado(Model modelo) {
+        List<TallerAutomotriz> listaTalleres = tallerAutomotrizRepository.findAll();
+        List<Puestos> listaPuestos = puestosRepository.findAll();
+        Empleados empleados = new Empleados();
+        modelo.addAttribute("empleados", new Empleados());
+        modelo.addAttribute("listaTalleres", listaTalleres);
+        modelo.addAttribute("listaPuestos", listaPuestos);
         return "formEmpleado";
     }
 
-    @PostMapping("/formEmpleado")
-    public String guardarEmpleado(@Valid Empleado empleado, BindingResult result, Model modelo, RedirectAttributes flash, SessionStatus status){
-        if(result.hasErrors()){
+    @PostMapping("/empleados/guardar")
+    public String guardarEmpleado(@Valid Empleados empleados, BindingResult result, Model modelo, RedirectAttributes flash, SessionStatus status) {
+        if (result.hasErrors()) {
             modelo.addAttribute("titulo", "Registro de empleados");
             return "formEmpleado";
         }
-        String mensaje = (empleado.getId() != null) ? "El empleado ha sido editado con exito" : "Empleado registrado con exito";
-        empleadoService.save(empleado);
+        String mensaje = (empleados.getId() != null) ? "El empleado ha sido editado con exito" : "Empleado registrado con exito";
+        empleadoService.save(empleados);
         status.setComplete();
-        flash.addFlashAttribute("succes", mensaje);
-        return "redirect:listar";
+        flash.addFlashAttribute("success", mensaje);
+        return "redirect:/empleados";
     }
 
-    @GetMapping("/formEmpleado/{id}")
-    public String editarEmpleado(@PathVariable(value = "id") Integer id, Map<String, Object> modelo, RedirectAttributes flash){
-        Empleado empleado = null;
-        if(id > 0){
-            empleado = empleadoService.findOne(id);
-            if(empleado == null){
+    @GetMapping("/empleados/editar/{id}")
+    public String editarEmpleado(@PathVariable(value = "id") Integer id, Map<String, Object> modelo, RedirectAttributes flash) {
+        Empleados empleados = null;
+        if (id > 0) {
+            empleados = empleadoService.findOne(id);
+            if (empleados == null) {
                 flash.addFlashAttribute("error", "Id del empleado no existente");
                 return "redirect:/listar";
             }
-        }else{
+        } else {
             flash.addFlashAttribute("error", "Id del empleado no puede ser cero");
             return "redirect:/listar";
         }
-        modelo.put("empleado", empleado);
+        modelo.put("empleado", empleados);
         modelo.put("titulo", "Edición de empleado");
-        return  "formEmpleado";
+        return "formEmpleado";
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminarEmpleado(@PathVariable(value = "id") Integer id, RedirectAttributes flash){
-        if(id > 0){
+    @GetMapping("/empleado/eliminar/{id}")
+    public String eliminarEmpleado(@PathVariable(value = "id") Integer id, RedirectAttributes flash) {
+        if (id > 0) {
             empleadoService.delete(id);
             flash.addFlashAttribute("success", "Cliente eliminado con exito");
         }
         return "redirect:/listar";
     }
-
-
-
 
 }

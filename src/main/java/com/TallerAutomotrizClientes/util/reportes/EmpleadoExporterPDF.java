@@ -1,15 +1,15 @@
 package com.TallerAutomotrizClientes.util.reportes;
 
-import com.TallerAutomotrizClientes.entity.Empleado;
+import com.TallerAutomotrizClientes.entity.Empleados;
 
 
 import java.util.List;
 
 public class EmpleadoExporterPDF {
 
-    private List<Empleado> listaEmpleados;
+    private List<Empleados> listaEmpleados;
 
-    public EmpleadoExporterPDF(List<Empleado> listaEmpleados){
+    public EmpleadoExporterPDF(List<Empleados> listaEmpleados){
         super();
         this.listaEmpleados = listaEmpleados;
     }
