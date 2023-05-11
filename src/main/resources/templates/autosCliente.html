@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión Taller Automotriz</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #0d47a1;">
+        <a class="navbar-brand" href="/">Armando Automotriz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/clientes">Clientes<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/empleados">Empleados</a>
+                <a class="nav-item nav-link" href="/servicios">Servicios</a>
+                <a class="nav-item nav-link" href="/talleres">Taller</a>
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a  href="/clientes" >Clientes</a></li>
+            <li class="breadcrumb-item active" aria-current="page" >Automoviles</li>
+        </ol>
+    </nav>
+</header>
+<div class="container">
+    <h3>Automóviles de <span th:text="${cliente.nombre}"></span></h3>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary mb-3" href="automoviles/registro">
+                <i class='bx bx-plus'></i> Agregar
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div th:if="${#lists.isEmpty(listaAutomoviles)}">
+                <p>No hay registro de automóviles para este cliente.</p>
+            </div>
+            <div th:if="${not #lists.isEmpty(listaAutomoviles)}" class="card-deck">
+                <div th:each="automovil : ${listaAutomoviles}" class="card mb-4" style="min-width: 300px; max-width: 350px; ">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${automovil.modelo}"></h5>
+                        <p class="card-text">
+                            Marca: <span th:text="${automovil.marca}"></span><br>
+                            Color: <span th:text="${automovil.color}"></span><br>
+                            Año: <span th:text="${automovil.anio}"></span><br>
+                            Placa: <span th:text="${automovil.placa}"></span><br>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex">
+                        <a th:href="@{/clientes/{idCliente}/automoviles/{idAutomovil}/servicios/registro(idCliente=${cliente.id},idAutomovil=${automovil.id})}"
+                           class="btn btn-secondary mr-auto">
+                            <i class='bx bx-plus'> Servicio</i>
+                        </a>
+                        <a th:href="@{/clientes/{idCliente}/automoviles/{id}/editar(id=${automovil.id}, idCliente=${cliente.id})}" class="btn btn-info ml-auto">
+                            <i class='bx bx-edit'></i>
+                        </a>
+                        <a th:href="@{/clientes/{idCliente}/automoviles/{id}/servicios(id=${automovil.id}, idCliente=${cliente.id})}" class="btn btn-warning ml-auto">
+                            <i class='bx bx-history'></i>
+                        </a>
+                        <a th:href="@{/clientes/{idCliente}/automoviles/eliminar/{id}(id=${automovil.id}, idCliente=${cliente.id})}" class="btn btn-danger ml-auto"
+                           onclick="return confirm('Estas seguro de eliminar el automovil del cliente?');">
+                            <i class='bx bx-trash'></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQ==" crossorigin="anonymous"></script>
+</footer>
+</body>
+</html>

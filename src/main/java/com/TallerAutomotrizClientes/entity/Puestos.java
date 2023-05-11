@@ -3,9 +3,6 @@ package com.TallerAutomotrizClientes.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "puestos")
 public class Puestos {

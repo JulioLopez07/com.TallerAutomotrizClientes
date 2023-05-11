@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleados, Integer> {
-    // otros métodos si los hay
+
+    Empleados findByNombre(String nombreEmpleado);
 }

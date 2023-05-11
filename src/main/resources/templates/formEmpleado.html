@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{layout/layout}" id="head">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<head>
     <meta charset="UTF-8">
 </head>
 <body>
-<header th:repleace="~{layout/layout}" id="header"></header>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #0d47a1;">
+        <a class="navbar-brand" href="/">Armando Automotriz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/clientes">Clientes<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="/empleados">Empleados</a>
+                <a class="nav-item nav-link" href="/servicios">Servicios</a>
+                <a class="nav-item nav-link" href="/talleres">Taller</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/empleados">Empleados</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Registro</li>
+    </ol>
+</nav>
 <br>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col md-6 col-sm-6 container justify-content-center card">
-            <h1 class="text-center" th:text="${titulo}"></h1>
             <div class="card-body">
+                <h2 class="mr-5">Empleado</h2>
                 <form th:action="@{/empleados/guardar}" th:object="${empleados}" method="post" style="max-width:600px; margin:0 auto;">
                     <input type="hidden" th:field="*{id}" th:value="${empleados.id}"/>
                     <div class="m-3">
@@ -58,7 +83,7 @@
                             </div>
                         </div>
                     <div class="box-footer">
-                        <a th:href="@{/talleres}" class="btn btn-secondary">Volver</a>
+                        <a th:href="@{/empleados}" class="btn btn-secondary">Volver</a>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                     </div>

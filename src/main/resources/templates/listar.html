@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
-<head th:replace="~{layout/layout}" id="head">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<head>
     <meta charset="UTF-8">
 </head>
 <body>
-<header th:repleace="~{layout/layout}" id="header"></header>
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #0d47a1;">
+        <a class="navbar-brand" href="/">Armando Automotriz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/clientes">Clientes<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="/empleados">Empleados</a>
+                <a class="nav-item nav-link" href="/servicios">Servicios</a>
+                <a class="nav-item nav-link" href="/talleres">Taller</a>
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">Empleados</li>
+    </ol>
+    </nav>
+</header>
 
 <div class="py-4 ml-5 mr-5">
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <h4 class="card-title">
-                <a th:href="@{/empleados/registro}" class="btn btn-primary">Agregar empleados</a>
-                <a th:href="@{/exportarPDF}" class="btn btn-secondary">Exportar a PDF</a>
-                <a th:href="@{/exportarExcel}" class="btn btn-success">Exportar a Excel</a>
+                <a th:href="@{/empleados/registro}" class="btn btn-primary">+ Agregar</a>
+                <a onclick="showAlert()" class="btn btn-secondary">Exportar a PDF</a>
+                <a onclick="showAlert()" class="btn btn-success">Exportar a Excel</a>
+                <script>
+                    function showAlert() {
+                        alert("Esta funcionalidad estará disponible próximamente.");
+                        window.location.href = window.location.href;
+                    }
+                </script>
             </h4>
             <table class="table table-striped">
                 <thead>
@@ -24,7 +55,6 @@
                         <th>Correo</th>
                         <th>Rfc</th>
                         <th>Telefono</th>
-                        <th>Documentos</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -36,23 +66,19 @@
                         <td style="font-size: 14px;" th:text="${empleados.correo_electronico}"></td>
                         <td style="font-size: 14px;" th:text="${empleados.rfc}"></td>
                         <td style="font-size: 14px;" th:text="${empleados.telefono}"></td>
+
                         <td>
-                            <a class="btn btn-info btn-sm" th:href="@{/empleados/servicios/} + ${empleados.id}">Servicios</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-warning btn-sm" th:href="@{/empleados/editar/} + ${empleados.id}">Editar</a>
+                            <a class="btn btn-info btn-sm" th:href="@{/empleados/editar/} + ${empleados.id}">Editar</a>
                             &nbsp;&nbsp;
-                            <a class="btn btn-danger btn-sm" th:href="@{/empleados/eliminar/} + ${empleados.id}" onclick="return confirm('Estas seguro de eliminar al empleados?');">Eliminar</a>
+                            <a class="btn btn-danger btn-sm" th:href="@{/empleados/eliminar/} + ${empleados.id}"
+                               onclick="return confirm('Estas seguro de eliminar al empleados?');">Eliminar</a>
                         </td>
 
                     </tr>
                 </tbody>
             </table>
-            <nav th:replace="~{paginator-nav}" id="paginator"></nav>
          </div>
     </div>
 </div>
-
-<footer th:replace="~{layout/layout}" id="footer"></footer>
 </body>
 </html>

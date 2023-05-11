@@ -3,6 +3,9 @@ package com.TallerAutomotrizClientes.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -14,7 +17,7 @@ public class Cliente {
     @NotEmpty
     @Column(nullable = false)
     private String nombre;
-    @NotEmpty
+    @NotEmpty(message = "El campo telefono no puede estar vacío")
     @Column(nullable = false)
     private String telefono;
     @NotEmpty
@@ -32,6 +35,21 @@ public class Cliente {
     @NotEmpty
     @Column(nullable = false)
     private String estado;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Automovil> automoviles = new ArrayList<>();
+
+    public Cliente(Integer id, String nombre, String telefono, String correo_electronico, String direccion, String cp, String ciudad, String estado, List<Automovil> automoviles) {
+        this.id = id;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo_electronico = correo_electronico;
+        this.direccion = direccion;
+        this.cp = cp;
+        this.ciudad = ciudad;
+        this.estado = estado;
+        this.automoviles = automoviles;
+    }
 
     public Cliente(Integer id, String nombre, String telefono, String correo_electronico, String direccion, String cp, String ciudad, String estado) {
         this.id = id;
@@ -52,6 +70,14 @@ public class Cliente {
         this.cp = cp;
         this.ciudad = ciudad;
         this.estado = estado;
+    }
+
+    public List<Automovil> getAutomoviles() {
+        return automoviles;
+    }
+
+    public void setAutomoviles(List<Automovil> automoviles) {
+        this.automoviles = automoviles;
     }
 
     public Cliente() {

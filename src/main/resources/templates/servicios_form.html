@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Nuevo Servicio</title>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #0d47a1;">
+    <a class="navbar-brand" href="/">Armando Automotriz</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/clientes">Clientes<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="/empleados">Empleados</a>
+        <a class="nav-item nav-link" href="/servicios">Servicios</a>
+        <a class="nav-item nav-link" href="/talleres">Taller</a>
+      </div>
+    </div>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a  href="/servicios" >Servicios</a></li>
+      <li class="breadcrumb-item active" aria-current="page" >Registro</li>
+    </ol>
+  </nav>
+</header>
+
+<!--th:action="@{/clientes/{id}/automoviles/{idAuto}/servicios/registro}"-->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col md-6 col-sm-6 container justify-content-center card">
+      <h1 class="text-center" th:text="${titulo}"></h1>
+      <div class="card-body">
+        <h2 class="mr-5">Registro de nuevo servicio</h2>
+        <div th:if="${cliente != null}">
+          <p>Nombre del cliente: <span th:text="${cliente.nombre}"></span></p>
+        </div>
+
+        <div th:if="${automovil != null}">
+          <p>Modelo del automóvil: <span th:text="${automovil.modelo}"></span></p>
+        </div>
+
+        <form method="post" th:object="${servicio}"
+              th:action="@{/clientes/{cliente}/automoviles/{automovil}/servicios/nuevo(cliente=${automovil.cliente.id},automovil=${automovil.id})}">
+          <input type="hidden" th:field="*{automovil}" th:value="${automovil.id}"/>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="tipoServicio">Tipo de Servicio:</label>
+              <select class="form-control" id="tipoServicio" th:field="*{tipoServicio}">
+                <option th:each="tipo : ${tiposDeServicio}" th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="metodoPago">Método de Pago:</label>
+              <select class="form-control" id="metodoPago" th:field="*{metodoPago}">
+                <option th:each="metodo : ${metodosDePago}" th:value="${metodo.id}" th:text="${metodo.nombre}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="fecha">Fecha:</label>
+              <input type="date" id="fecha" name="fecha" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <!--<div class="form-group col-md-6">
+              <label for="tipoServicio">Tipo de Servicio:</label>
+              <select class="form-control" id="tipoServicio" th:field="*{tipoServicio}">
+                <option th:each="tipo : ${tiposDeServicio}" th:value="${tipo.id}" th:text="${tipo.nombre}"></option>
+              </select>
+            </div>-->
+              <label for="empleado">Empleado:</label>
+              <select class="form-control" id="empleado" name="empleado" th:field="*{empleados}">
+                <option value="">Seleccionar empleado</option>
+                <th:block th:each="empleado : ${empleados}">
+                  <option th:value="${empleado.id}" th:text="${empleado.nombre}"></option>
+                </th:block>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="5" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="diagnostico">Diagnóstico:</label>
+            <textarea class="form-control" id="diagnostico" th:field="*{diagnostico}" rows="5" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="detallesRefacciones">Detalles de refacciones:</label>
+            <textarea id="detallesRefacciones" name="detallesRefacciones" th:field="*{detallesRefacciones}" class="form-control" required></textarea>
+          </div>
+
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="total_refacciones">Total de refacciones:</label>
+              <input type="text" id="total_refacciones" name="total_refacciones" class="form-control" th:field="*{totalRefacciones}" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="manoObra">Mano de obra:</label>
+              <input type="text" id="manoObra" name="manoObra" class="form-control"  required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="otrosMateriales">Otros materiales:</label>
+              <input type="text" id="otrosMateriales" name="otrosMateriales" class="form-control"  required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="subtotal">Subtotal:</label>
+              <input type="text" id="subtotal" name="subtotal" class="form-control" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="iva">IVA:</label>
+              <input type="text" id="iva" name="iva" class="form-control" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="total">Total:</label>
+              <input type="text" id="total" name="total" class="form-control" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="anticipo">Anticipo:</label>
+              <input type="text" id="anticipo" name="anticipo" class="form-control" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="saldo">Saldo:</label>
+              <input type="text" id="saldo" name="saldo" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Registrar Servicio</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

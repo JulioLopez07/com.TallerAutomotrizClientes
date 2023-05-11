@@ -8,9 +8,35 @@
     <title>Gestion Taller Automotriz</title>
 </head>
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #0d47a1;">
+        <a class="navbar-brand" href="/">Armando Automotriz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/clientes">Clientes<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/empleados">Empleados</a>
+                <a class="nav-item nav-link" href="/servicios">Servicios</a>
+                <a class="nav-item nav-link active" href="/talleres">Taller</a>
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a  href="/talleres" >Taller</a></li>
+            <li class="breadcrumb-item" aria-current="page" ><a  href="/puestos" >Puestos</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:if="${puesto.id == null}">Nuevo</li>
+            <li class="breadcrumb-item active" aria-current="page" th:unless="${puesto.id == null}">Editar</li>
+        </ol>
+    </nav>
+</header>
 <div class="container text-center">
 
     <div class="col-lg-6 col md-6 col-sm-6 container justify-content-center card">
+        <br>
         <h2 th:if="${puesto.id == null}">Puesto de trabajo</h2>
         <h2 th:unless="${puesto.id == null}">Editar puesto de trabajo</h2>
         <div class="card-body">

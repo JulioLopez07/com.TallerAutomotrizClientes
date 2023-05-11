@@ -1,8 +1,6 @@
 package com.TallerAutomotrizClientes.controller;
 
-import com.TallerAutomotrizClientes.entity.Empleados;
 import com.TallerAutomotrizClientes.entity.Puestos;
-import com.TallerAutomotrizClientes.entity.TallerAutomotriz;
 import com.TallerAutomotrizClientes.repository.EmpleadoRepository;
 import com.TallerAutomotrizClientes.repository.PuestosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
